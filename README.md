@@ -46,4 +46,4 @@
 
 - Соревнование: <http://alfactf.ru/>
 - Страница на CTFtime: <https://ctftime.org/event/3250>
-- Контакт автора: <https://github.com/sakost>
+- Контакт автора: <https://github.com/sakost> · [Telegram @sakost](https://t.me/sakost)
