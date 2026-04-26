@@ -44,3 +44,6 @@ mv "$TIERLISTS_DIR/$tl_name" "$TIERLISTS_DIR/${tl_name}__with__${CURRENT_USER}"
 ## Флаг
 
 `alfactf{mv_from_W3B_ui_T0_wHIpT4il}`
+
+## Заметка
+> Нейронка выбрала не того пользователя во write-up-е. Нужно делать подмену для admin-а.
