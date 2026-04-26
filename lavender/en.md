@@ -133,8 +133,11 @@ alfa{YoU_jusT_SAved_A_c0fFeE_sHOp}
 
 `alfa{YoU_jusT_SAved_A_c0fFeE_sHOp}`
 
-## Key Takeaways
+## Files
 
-- A v0.1 of any C2 framework is not a security product yet — `tcLogin` accepting any `username` and `tcConnect` upgrading without OTP makes the teamserver trivially impersonable. Even after OTP, look for trust-boundary asymmetries (e.g. login signs the JWT, but a different code path consumes it).
-- Shell-quoted templates (`-DSERVICE_NAME='"%s"'`) feel safer than they are. As soon as the `%s` can contain a single quote, the entire `'...'` envelope is escapable. The fix is `exec.Command(prog, args...)` (no shell), not "smarter" quoting.
-- Forensic images of CTF VMs are often a chain: artifact → embedded crypto material → external C2 → server-side key store. Treat the artifact as the *first* clue, not the answer; the encryptor's public key is the bridge that lets you confirm you've grabbed the right private key on the other side.
+Solver scripts: [`artifacts/`](artifacts/)
+
+| File | Role |
+|------|------|
+| `exploit.py` | AdaptixC2 v0.1 RCE driver — login as `gigashad`, create a `BeaconHTTP` listener, fire the `svcname` injection, stop the listener |
+| `decrypt.py` | HFL1 envelope decryptor — RSA-OAEP-SHA256 unwraps the AES key, AES-GCM decrypts the body |

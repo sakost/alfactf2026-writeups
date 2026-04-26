@@ -30,9 +30,7 @@ Each writeup follows a unified template:
 - **Vulnerability / Stages:** root-cause analysis and/or staged chain.
 - **Exploit:** concrete steps and payloads.
 - **Flag:** for copy-paste.
-- **Key Takeaways:** the lesson from the challenge, not a step recap.
-
-Solver scripts (`solve/`) will be added in a follow-up update.
+- **Files:** links to solver scripts under `<challenge>/artifacts/` (when present).
 
 ## Team
 

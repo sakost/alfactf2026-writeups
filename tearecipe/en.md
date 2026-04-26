@@ -61,7 +61,13 @@ alfa{M4in_fr4MES_ARE_C0mp13X_bUt_cut3}
 
 `alfa{M4in_fr4MES_ARE_C0mp13X_bUt_cut3}`
 
-## Key Takeaways
+## Files
 
-- A "comment-only" Python filter can be bypassed via `# coding: unicode_escape` because Python decodes the source through the codec **before** parsing — a line-by-line check sees comments while the parser sees code.
-- LFSR with a known feedback polynomial is reversible if any keystream byte can be recovered, which here came from the password-derived branch of a two-message encryption scheme.
+Solver artifacts: [`artifacts/`](artifacts/)
+
+| File | Role |
+|------|------|
+| `tearecipe_7a49aae.py` | Original challenge file — LFSR-encrypted two-message decryptor (raw bytes, not UTF-8) |
+| `comments_only.py` | The `# coding: unicode_escape` payload uploaded to the Mainframe checker — every line starts with `#` so it passes the filter |
+| `inner_script.py` | The inner Python that the payload decodes to (walks `/`, finds the flag) |
+| `build_payload.py` | Builder — turns the inner Python into the encoded comment-only payload |

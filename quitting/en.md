@@ -91,8 +91,11 @@ ssh -i /tmp/mykey admin@tracker-prod 'cat /home/admin/flag.txt'
 
 `alfa{AdmiN_n07_f0UND_bUt_his_keYs_4re_in_5af3_hAnds}`
 
-## Key Takeaways
+## Files
 
-- `pidfd_getfd()` is the correct primitive for "borrow another process's fd": unlike `/proc/PID/fd/N`, which re-opens the underlying inode, it shares the existing open-file description — essential for `/dev/pts/ptmx`, where re-opening creates a brand-new PTY pair.
-- Disabling `TIOCSTI` does not stop privileged TTY injection — root can still write to the master side via fd duplication. TTY hijacking requires a defense at the fd-acquisition boundary, not just at the ioctl boundary.
-- Established SSH connections survive socket deletion. The agent socket is for **new** connections; once the SSH client has the channel open, the socket file is irrelevant — sabotaging it doesn't kill the session.
+Solver scripts: [`artifacts/`](artifacts/)
+
+| File | Role |
+|------|------|
+| `inject.sh` | Working solver — `pidfd_getfd()` duplicates sshd's master-PTY fd and writes the `authorized_keys` install command into the `admin` session, then SSH-logs in with the planted key |
+| `inject2.sh` | Failed earlier approach — writing to `/proc/PID/fd/N` for `ptmx` creates a *new* PTY pair instead of reaching the existing one (kept as the documented dead end) |

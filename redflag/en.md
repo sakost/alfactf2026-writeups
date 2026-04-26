@@ -44,9 +44,3 @@ Two more factors complete the exploit:
 ## Flag
 
 `alfactf{mv_from_W3B_ui_T0_wHIpT4il}`
-
-## Key Takeaways
-
-- `mv src existing_dir/` is "move into", not "rename" — combined with predictable naming, an attacker can pre-create the destination to graft their state on top of someone else's.
-- Recursive directory traversal (`find` without `-maxdepth`) trusts the outermost metadata file. When the access-control check reads `/path/.meta` while the listing reads `/path/**/items/*`, attacker-controlled outer state silently overrides victim-controlled inner state.
-- Reserved/system-only users are not a security boundary when attacker-influenced state can be merged into an attacker-owned namespace.

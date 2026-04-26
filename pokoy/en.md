@@ -87,8 +87,15 @@ Block 3: "6a86f645c24e4b1}"
 
 The flag references **white-box cryptography** — an AES implementation where the key is embedded directly into lookup tables, making it "visible" (like an open floor plan in a coworking space — the literal meaning of «Покой», the challenge name).
 
-## Key Takeaways
+## Files
 
-- Synthesised hardware netlists are an excellent target for AES recovery: the well-known structure (144 T-tables + 16 final S-boxes) is preserved through synthesis, and the per-position `a_j ⊕ S[i] ⊕ b_j` identity directly hands you `RK_9` and `RK_10` byte by byte. From the last two round keys the master key falls out via the AES key schedule (or, here, more directly from round-1 tables).
-- "White-box" only means the key is hidden inside table contents, not inside a register — once you can probe ROM contents, those tables *are* the key. This challenge is a textbook reduction of white-box AES to plain AES.
-- When working with synthesised designs, the byte-order of memory contents vs. the byte-order of the rendered display vs. the byte-order of the typed input can each be reversed independently. Always confirm the direction empirically with one known plaintext-ciphertext pair before trusting a recovered key.
+Solver scripts: [`artifacts/`](artifacts/) — run roughly in this order:
+
+| File | Role |
+|------|------|
+| `extract_roms.py` | Parse the synthesised `peace.v` netlist and dump every `_M_xxxxx_` ROM to `roms.json` (pass the `peace.v` path as `argv[1]`; the netlist itself is not in the repo) |
+| `analyze_roms.py` | Sanity check — which ROMs are permutations and how their entries differ from the standard AES S-box |
+| `check_sboxes.py` | Confirm `M_00000..M_00015` are pairwise XOR-shifts of the same 256-byte permutation |
+| `check_ttables.py` | Identify each `M_00016..M_00031` as `S(i ⊕ a) ⊕ b` against standard AES T-tables `T0..T3` |
+| `find_aes_keys.py` | Recover `(a_j, b_j)` per byte for the final-round S-boxes (round-9 / round-10 key bytes) |
+| `aes_decrypt.py` | Pure-Python AES-128-ECB; takes the recovered master key and inverts the four displayed blocks |

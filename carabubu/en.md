@@ -173,8 +173,13 @@ GET /data/small/shell.txt?c=/get_gift_location
 | 4 | `.htaccess` upload via admin product image (no ext check) → PHP in `.txt` |
 | 5 | RCE → read `/get_gift_location` |
 
-## Key Takeaways
+## Files
 
-- `mysql_real_escape_string` is not a substitute for a whitelist when the unsafe sink is an `ORDER BY` clause — quotes aren't the relevant metacharacters there, parentheses and subqueries are.
-- `SLEEP()` in a constant-expression context is optimised out. Forcing the optimiser to run it requires anchoring the subquery to an actual row source — `(SELECT IF(..., SLEEP(t), 0) FROM real_table LIMIT 1)`.
-- `.htaccess` uploads turn an "extension whitelist for PHP" into a no-op: the attacker re-defines what counts as PHP for the directory they control. Any uploader that doesn't pin the destination filename or strip `.htaccess` is one step from RCE on Apache.
+Solver scripts: [`artifacts/`](artifacts/)
+
+| File | Role |
+|------|------|
+| `sqli.py` | Time-based blind SQLi extractor (general-purpose) |
+| `exploit.py` | End-to-end driver: session check → admin-credential extraction → preparation for the `.htaccess` upload |
+
+Replace `SID` / `SESS` with your own `PHPSESSID` from a logged-in customer session before running.

@@ -133,8 +133,6 @@ client.post('/buy-exclusive', data={'coupon': str(secret)})
 
 `alfa{esPress0_MaccHiAt0_pOR_F4VOr3}`
 
-## Key Takeaways
+## Files
 
-- A removed-but-still-deployed service is a recurring real-world bug: the second commit in git is **not** the production state when nginx still proxies to the deleted backend. Always look at the runtime topology, not just `HEAD`.
-- A Shamir scheme is only as strong as the integrity of its public parameters. Letting the *user* overwrite the modulus while leaving the polynomial fixed lets a single share reveal `f(0) mod q` whenever `q` divides any x-coordinate — defeating the threshold property entirely.
-- Random 128-bit UUIDs are factorisable cheaply (largest prime factor ≈ 80 bits on average), and CRT composes residues across the usable primes to exactly recover any 256-bit secret in a few attempts. UUIDs are not opaque numbers — they have arithmetic structure.
+Artifact: [`artifacts/flag_qr.svg`](artifacts/flag_qr.svg) — the QR code the service returned after the recovered coupon was submitted (decodes to the flag).

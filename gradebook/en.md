@@ -78,8 +78,6 @@ passes all checks and returns the flag.
 
 `alfactf{attES7A7_V_krOVI_po_B0kAm_koNVoY_A_mEnYa_V35Ut_P0d_S1reni_v0Y}`
 
-## Key Takeaways
+## Files
 
-- A polynomial rolling hash is not a MAC — given the modulus and a controllable suffix, a forger can always extend the message to hit any target hash modulo `P`.
-- Format-level "free space" (YAML comments, JSON whitespace, HTTP trailers) gives the attacker the exact knob needed to control non-cryptographic hashes while keeping the parsed value intact.
-- The constraint that the hash-extension bytes be **printable ASCII** is solvable in practice because, when `P ≈ 256^k`, only the topmost digit of the unknown is heavily constrained; brute-forcing the prefix that lands it in range is cheap.
+Solver script: [`artifacts/solve.py`](artifacts/solve.py) — recomputes the polynomial hash, calculates the byte deltas introduced by editing grades to all-5s, and brute-forces a Cyrillic byte substitution in the trailing comment that exactly cancels them.

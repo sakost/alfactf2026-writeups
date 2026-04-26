@@ -101,8 +101,6 @@ The validator polls every 3 s. We must fire the SQLi **before** it picks up the 
 
 `alfa{5mO7rYA_KAK01_fAbR1C_SMotryA_sK0lKO_D3TAIl5}`
 
-## Key Takeaways
+## Files
 
-- "Encrypt-then-MAC" only protects what the MAC covers. CBC plaintexts whose IV is stored separately are malleable in their first 16 bytes regardless of how strong the MAC is — `HMAC(ciphertext)` is *not* `HMAC(IV ‖ ciphertext)`.
-- An SQLi that doesn't reach `users` or `flags` is not "low-impact". When the queue table contains crypto material (IVs, nonces, salts), even a per-row UPDATE primitive becomes a tampering primitive on every row in flight.
-- Owner / superuser fast-paths inside async workers are dangerous when the worker authenticates the request only by a decrypted field. The check needs to be on the *signed* envelope, not the *decrypted* payload.
+Solver script: [`artifacts/solve.py`](artifacts/solve.py) — registers accounts until the user-id ends in `1`, fills the cart with one item per category, calls `/checkout`, then immediately fires the IV-flip SQLi via `/orders/<id>/update_comment` and waits for the validator to award the items before claiming the flag at `/check_dresscode`.
