@@ -13,7 +13,7 @@ The chain: pull artifacts off the E01 → reverse the encryptor's envelope forma
 
 ## Stage 1 — Forensics
 
-The image holds an ext4 partition at offset 2048 inside `CAFE.E01`. We read it directly with sleuthkit (macOS can't mount ext4):
+The image holds an ext4 partition at offset 2048 inside `CAFE.E01`. We read it directly with sleuthkit, no mounting needed:
 
 ```
 fls -o 2048 -r CAFE.E01
