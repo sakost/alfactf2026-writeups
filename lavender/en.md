@@ -55,13 +55,42 @@ For our file: `version=1, wrapped=256, nonce=12, ct=51`.
 
 ## Stage 3 — OSINT → C2
 
-The CTF Telegram channel hint pointed to `gigashad.xyz` and a video of the attacker's setup. The video shows them connecting to `lab.gigashad.xyz:4321` with **AdaptixC2**, and the connect-dialog UI matches the **v0.1** tag (commit `18db12a`, 2025-01-26) — pre-OTP era, four-field connect dialog.
+### From disk image to the attacker's domain
 
-A subtitle in the video is the actual hint:
+The gopher agent (`agent.bin`) embeds its C2 config; extract it with the [0xThiebaut/AdaptixC2-gopher](https://github.com/0xThiebaut/AdaptixC2-gopher) CLI:
+
+```json
+{"type":2421052563,"addresses":["cc.gigashad.xyz:4444"],"banner_size":17,"conn_timeout":10,"use_ssl":false}
+```
+
+→ attacker domain: **`gigashad.xyz`**.
+
+### From the domain to the Telegram channel
+
+Browsing `gigashad.xyz` reveals a link to the attacker's Telegram channel **[@giga_shadow_vqk53b5212e](https://t.me/giga_shadow_vqk53b5212e)**, which contains:
+
+1. An archived post recommending **feroxbuster** — a hint that we'll need to fuzz directories / vhosts on the C2 host.
+2. A **Telegraph article** (`telegra.ph/Internet-pomnit-vsyo-03-23`) describing the attacker's setup philosophy.
+3. A **video** of the attacker bringing up their C2 infrastructure.
+
+### From the video to the C2 endpoint
+
+The video shows:
+
+- `cd dist && bash ssl_gen.sh` — self-signed TLS cert generation (the visible `Cannot open parameter file secp384r1` warning confirms the default profile)
+- The **AdaptixC2 connect dialog** with four fields (Host / Port / Username / Password) — UI fingerprint
+- Connection target: **`lab.gigashad.xyz:4321`**
+- Subtitle at the end — the actual hint:
 
 > Всё готово, можно создать Listener и Агента и закинуть к жертве
 
-i.e. "everything is ready: create a Listener, generate an Agent, push it onto the victim." The "victim" in this puzzle is the operator's own server — the box that holds the GS-encrypt private key.
+i.e. once we're in: create a listener, generate an agent, "throw it at the victim." In our puzzle, the "victim" is the operator's own server — the box that holds the GS-encrypt private key.
+
+### Pinning the version
+
+The four-field dialog (no OTP field) is the key fingerprint. Current `main` of AdaptixC2 has a five-field dialog with OTP; cross-referencing git history pinpoints **v0.1** (commit `18db12a`, 2025-01-26) — the last release before OTP was added. This determines the auth protocol: JWT in the first WebSocket frame instead of an `?otp=` query param.
+
+To confirm before authenticating, we rebuilt AdaptixClient v0.1 locally (`git checkout 18db12a && make client`) and verified the UI match.
 
 ## Stage 4 — Authenticate
 
