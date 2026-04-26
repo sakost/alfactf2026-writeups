@@ -44,3 +44,6 @@ Two more factors complete the exploit:
 ## Flag
 
 `alfactf{mv_from_W3B_ui_T0_wHIpT4il}`
+
+## Note
+> AI chose wrong user to exploit - should've been admin.
