@@ -1,0 +1,27 @@
+# Editor / IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Working files
+*.bak
+*.tmp
+*.orig
+
+# Tooling state (Serena, etc.)
+.serena/
+
+# Python (in case solve/ scripts land later)
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Node (in case any tooling appears)
+node_modules/
