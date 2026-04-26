@@ -45,5 +45,5 @@ The writeup texts are released under the [MIT License](LICENSE) — © Konstanti
 ## Links
 
 - Competition: <http://alfactf.ru/>
-- CTFtime page: *will be added after the event is published*
+- CTFtime page: <https://ctftime.org/event/3250>
 - Author contact: <https://github.com/sakost>

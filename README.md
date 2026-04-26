@@ -45,5 +45,5 @@
 ## Ссылки
 
 - Соревнование: <http://alfactf.ru/>
-- Страница на CTFtime: *будет добавлена после публикации события*
+- Страница на CTFtime: <https://ctftime.org/event/3250>
 - Контакт автора: <https://github.com/sakost>
